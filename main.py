@@ -7,9 +7,10 @@ HEIGHT = 768
 FPS = 60
 
 
-def get_img(sheet, frame, img_width, img_height):
+def get_image(sheet, frame_x, frame_y, img_width, img_height, scale):
     img = pygame.Surface((img_width, img_height)).convert_alpha()
-    img.blit(sheet, (0, 0), ((frame * img_width), 0, img_width, img_height))
+    img.blit(sheet, (0, 0), ((frame_x * img_width), (frame_y * img_height), img_width, img_height))
+    img = pygame.transform.scale(img, (img_width * scale, img_height * scale))
     return img
 
 
@@ -22,10 +23,10 @@ class Game:
 
         self.cat_img = pygame.image.load("cat.png").convert_alpha()
 
-        self.frame_0 = get_img(self.cat_img, 0, 141, 141)
-        self.frame_1 = get_img(self.cat_img, 1, 141, 141)
-        self.frame_2 = get_img(self.cat_img, 2, 141, 141)
-        self.frame_3 = get_img(self.cat_img, 3, 141, 141)
+        self.frame_0 = get_image(self.cat_img, 0, 1, 141, 141, 1)
+        self.frame_1 = get_image(self.cat_img, 1, 1, 141, 141, 1)
+        self.frame_2 = get_image(self.cat_img, 2, 1, 141, 141, 1)
+        self.frame_3 = get_image(self.cat_img, 3, 1, 141, 141, 1)
 
     def update(self):
         while True:
@@ -33,7 +34,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-            self.screen.fill("white")
+            self.screen.fill("black")
 
             # self.screen.blit(cat_img, (0, 0))
             self.screen.blit(self.frame_0, (0, 0))
